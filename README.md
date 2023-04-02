@@ -211,25 +211,26 @@ REQUEST_TIMEOUT=60
 
 ### Full list of arguments
 ```shell
-╭─ Arguments ─────────────────────────────────────────────────────────────────────────────────────────────╮
-│   prompt      [PROMPT]  The prompt to generate completions for.                                         │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Options ───────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --temperature       FLOAT RANGE [0.0<=x<=1.0]  Randomness of generated output. [default: 0.1]           │
-│ --top-probability   FLOAT RANGE [0.1<=x<=1.0]  Limits highest probable tokens (words). [default: 1.0]   │
-│ --editor                                       Open $EDITOR to provide a prompt. [default: no-editor]   │
-│ --cache                                        Cache completion results. [default: cache]               │
-│ --help                                         Show this message and exit.                              │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Chat Options ──────────────────────────────────────────────────────────────────────────────────────────╮
-│ --chat           TEXT  Follow conversation with id (chat mode). [default: None]                         │
-│ --show-chat      TEXT  Show all messages from provided chat id. [default: None]                         │
-│ --list-chat            List all existing chat ids. [default: no-list-chat]                              │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Assistance Options ────────────────────────────────────────────────────────────────────────────────────╮
-│ --shell  -s  Generate and execute shell commands.                                                       │
-│ --code       Generate only code. [default: no-code]                                                     │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│   prompt      [PROMPT]  The prompt to generate completions for.                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --temperature       FLOAT RANGE [0.0<=x<=1.0]  Randomness of generated output. [default: 0.1]                                │
+│ --top-probability   FLOAT RANGE [0.1<=x<=1.0]  Limits highest probable tokens (words). [default: 1.0]                        │
+│ --model             TEXT                       The OpenAI model which will generate the completion. [default: gpt-3.5-turbo] │
+│ --editor                                       Open $EDITOR to provide a prompt. [default: no-editor]                        │
+│ --cache                                        Cache completion results. [default: cache]                                    │
+│ --help                                         Show this message and exit.                                                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Chat Options ───────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --chat           TEXT  Follow conversation with id (chat mode). [default: None]                                              │
+│ --show-chat      TEXT  Show all messages from provided chat id. [default: None]                                              │
+│ --list-chat            List all existing chat ids. [default: no-list-chat]                                                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Assistance Options ─────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --shell  -s  Generate and execute shell commands.                                                                            │
+│ --code       Generate only code. [default: no-code]                                                                          │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 ## Docker
@@ -243,8 +244,10 @@ docker run --rm \
 
 Example of a conversation, using an alias and the `OPENAI_API_KEY` environment variable:
 ```shell
-alias sgpt="docker run --rm --env OPENAI_API_KEY --volume gpt-cache:/tmp/shell_gpt ghcr.io/ther1d/shell_gpt"
+alias sgpt="docker run --rm --env OPENAI_API_KEY --env USER_OS --env SHELL --volume gpt-cache:/tmp/shell_gpt ghcr.io/ther1d/shell_gpt"
 export OPENAI_API_KEY="your OPENAI API key"
+export USER_OS="$(uname -s)-$(sw_vers -productVersion)"
+export SHELL="$(echo $0)"
 sgpt --chat rainbow "what are the colors of a rainbow"
 sgpt --chat rainbow "inverse the list of your last answer"
 sgpt --chat rainbow "translate your last answer in french"
