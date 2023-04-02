@@ -22,6 +22,7 @@ EXPECTED_KEYS = (
     "CACHE_PATH",
     "REQUEST_TIMEOUT",
     "MODEL",
+    "USER_OS_NAME",
 )
 config = {}
 
@@ -45,6 +46,7 @@ def init() -> None:
         config["CACHE_PATH"] = os.getenv("CACHE_PATH", str(CACHE_PATH))
         config["REQUEST_TIMEOUT"] = os.getenv("REQUEST_TIMEOUT", str(REQUEST_TIMEOUT))
         config["MODEL"] = os.getenv("MODEL", MODEL)
+        config["USER_OS_NAME"] = os.getenv("USER_OS_NAME", None)
         _write()
 
     with open(CONFIG_PATH, "r", encoding="utf-8") as file:
