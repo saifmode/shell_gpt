@@ -42,7 +42,7 @@ def initial(prompt: str, shell: bool, code: bool) -> str:
         "Darwin": "Darwin/MacOS " + platform.mac_ver()[0],
     }
     current_platform = platform.system()
-    os_name = operating_systems.get(current_platform, current_platform)
+    os_name = getenv("USER_OS_NAME") or operating_systems.get(current_platform, current_platform)
     shell_name = basename(getenv("SHELL", "PowerShell"))
     if os_name == "nt":
         shell_name = splitext(basename(getenv("COMSPEC", "Powershell")))[0]
